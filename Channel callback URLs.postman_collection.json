@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "98f36ad4-f700-4ffe-bbcd-4bb897b48781",
+		"name": "Channel callback URLs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Conversation callback webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "AccessKey {{APIKEY}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"events\": [\"message.created\", \"message.updated\",\"conversation.created\",\"conversation.updated\"],\n    \"channelId\": \"{{channelId}}\",\n    \"url\": \"{{webhookUrl}}\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://conversations.messagebird.com/v1/webhooks",
+					"protocol": "https",
+					"host": [
+						"conversations",
+						"messagebird",
+						"com"
+					],
+					"path": [
+						"v1",
+						"webhooks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

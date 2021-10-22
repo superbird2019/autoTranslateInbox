@@ -1,0 +1,97 @@
+{
+  "id": "09527c2a-86fb-4a5a-8092-75e8db20903c",
+  "revisionId": "903cb9de-55e7-4c0f-b24b-556300326690",
+  "trigger": "onReceivedHttpRequest",
+  "title": "Conversation call back and translation flow",
+  "options": {
+    "callbacks": [],
+    "invokeUrl": "https://flows.messagebird.com/flows/09527c2a-86fb-4a5a-8092-75e8db20903c/invoke",
+    "targets": []
+  },
+  "metadata": {
+    "triggerIntent": ""
+  },
+  "steps": [
+    {
+      "id": "a9d32901-7e57-4cba-96fd-472f7ea4cd3d",
+      "action": "setVariables",
+      "options": {
+        "intent": "setVariables",
+        "label": "Define API AccessKey",
+        "variableSet": {
+          "accessKey": "AccessKey {Replace with live API key from https://dashboard.messagebird.com/en/developers/access"
+        }
+      }
+    },
+    {
+      "id": "999c28df-c79a-4548-a1b4-59604876c6b6",
+      "action": "switch",
+      "options": {
+        "cases": [
+          {
+            "conditions": [
+              {
+                "variable": "{{message.origin}}",
+                "operator": "==",
+                "value": "inbound",
+                "options": {
+                  "intent": "custom"
+                }
+              }
+            ],
+            "steps": [
+              {
+                "id": "6bd2d112-fd3a-4a8b-9b99-72ae96eca1b1",
+                "action": "translateText",
+                "options": {
+                  "text": "{{message.content.text}}",
+                  "originalLanguage": "",
+                  "languageToTranslateTo": "spa",
+                  "variables": {
+                    "translatedText": "translated"
+                  },
+                  "intent": "translateText"
+                }
+              },
+              {
+                "id": "2b9ab54f-6f8d-414e-8a70-9be63fc09de1",
+                "action": "fetchVariables",
+                "options": {
+                  "url": "https://conversations.messagebird.com/v1/conversations/{{conversation.id}}/messages",
+                  "headers": {
+                    "Authorization": "{{accessKey}}"
+                  },
+                  "variableKeys": [],
+                  "intent": "fetchVariables",
+                  "label": "Translate and send back to existing conversation",
+                  "method": "POST",
+                  "body": "{\"eventType\":\"note\",\"type\":\"event\",\"content\":{\"text\":\"{{translated}}\"}}",
+                  "contentType": "application/json",
+                  "rateLimit": 50
+                }
+              }
+            ],
+            "id": "7VMUvUkkPG"
+          }
+        ],
+        "defaultCase": {
+          "steps": [],
+          "id": "NDOtGim7g"
+        },
+        "intent": "smsConditional",
+        "label": "Only translate incoming messages"
+      }
+    },
+    {
+      "id": "9e87a1ae-cb40-48e4-a7db-e6892a835a0e",
+      "action": "endFlow",
+      "options": {
+        "intent": "endFlow"
+      }
+    }
+  ],
+  "published": true,
+  "createdAt": "2021-10-22T05:16:42.386928708Z",
+  "updatedAt": "2021-10-22T05:50:01.819962075Z",
+  "revisionCount": 6
+}
