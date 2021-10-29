@@ -2,9 +2,13 @@
 
 Auto translate all incoming customer messages to the desired language of your agents within Inbox.
 
-Sample screenshot below :
+Sample screenshots below :
+
+* Inbox
 https://storage.googleapis.com/mbse_samples/Screen%20Shot%202021-10-22%20at%205.32.57%20pm.png
 
+* Flow Builder
+https://storage.googleapis.com/mbse_samples/Screen%20Shot%202021-10-29%20at%2010.24.40%20pm.png
 
 
 Steps :
